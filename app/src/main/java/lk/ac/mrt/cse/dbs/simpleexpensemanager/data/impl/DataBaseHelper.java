@@ -32,7 +32,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String AMOUNT = "amount";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "expenseManager.db", null, 1);
+        super(context, "expenseManager_190137J.db", null, 1);
     }
 
     // Used in creating table for first time
@@ -118,7 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String datestr = cursor.getString(1);
                 String accountNo = cursor.getString(2);
                 int transactionType = cursor.getInt(3);
-                float amount = cursor.getFloat(4);
+                double amount = Math.round(cursor.getFloat(4) * 100.0) / 100.0;
 
                 Date date = null;
                 try {
@@ -207,7 +207,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean updateAccountBalance(String accountNo, double amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlUpdateBalanceQuery = "UPDATE "+ACCOUNT+" SET "+INITIAL_BALANCE+" =(SELECT "+INITIAL_BALANCE+" FROM "+ACCOUNT+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"') + "+amount+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"';";
+        String sqlUpdateBalanceQuery = "UPDATE "+ACCOUNT+" SET "+INITIAL_BALANCE+" = (SELECT "+INITIAL_BALANCE+" FROM "+ACCOUNT+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"') + "+amount+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"';";
         Cursor cursor = db.rawQuery(sqlUpdateBalanceQuery, null);
         if(cursor.moveToFirst()){
             return true;
@@ -216,5 +216,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-
 }

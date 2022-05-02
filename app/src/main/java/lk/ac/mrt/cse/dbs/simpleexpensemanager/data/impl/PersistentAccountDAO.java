@@ -1,5 +1,6 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.ui.MainActivity;
 
 public class PersistentAccountDAO implements AccountDAO {
     private DataBaseHelper dbh;
@@ -50,7 +50,10 @@ public class PersistentAccountDAO implements AccountDAO {
 
     @Override
     public void updateBalance(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException {
+        amount = Math.round(amount * 100.0) / 100.0;
         float value = 0;
+
+
         if (expenseType == ExpenseType.EXPENSE){
             value -= amount;
         }
