@@ -76,7 +76,7 @@ public abstract class ExpenseManager implements Serializable {
      * @return
      */
     public List<Transaction> getTransactionLogs() {
-        return transactionsHolder.getPaginatedTransactionLogs(20);
+        return transactionsHolder.getPaginatedTransactionLogs(20); // limit increased to 20
     }
 
     /***

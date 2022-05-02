@@ -17,6 +17,7 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
+// This class consist of all the database connections and SQL statements and behaves as a DAO
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 
@@ -52,6 +53,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Insert one account to database
     public boolean addOneAccount(Account account){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -71,6 +73,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Insert one transaction log to database
     public boolean addOneTransactionLog(Transaction transaction){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -104,7 +107,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    
+
+    // Get all Transaction logs
     public List<Transaction> getAllLog(){
         List<Transaction> returnList = new ArrayList<>();
 
@@ -147,6 +151,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    // Get all Accounts in database
     public List<Account> getAllAccount(){
         List<Account> returnList = new ArrayList<>();
 
@@ -173,6 +178,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    // Get Account from account number
     public Account getAccountFromNo(String accountNoIn){
         Account curAccount = null;
 
@@ -192,6 +198,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return curAccount;
     }
 
+    // Delete account using account number
     public boolean deleteOneAccount(String accountNo){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -205,6 +212,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Update account balance using account number and amount
     public boolean updateAccountBalance(String accountNo, double amount){
         SQLiteDatabase db = this.getWritableDatabase();
         String sqlUpdateBalanceQuery = "UPDATE "+ACCOUNT+" SET "+INITIAL_BALANCE+" = (SELECT "+INITIAL_BALANCE+" FROM "+ACCOUNT+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"') + "+amount+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"';";

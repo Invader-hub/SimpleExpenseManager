@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         /***  Begin Persistent database storage implementation  ***/
-//        expenseManager = new InMemoryDemoExpenseManager();
+
         try {
             expenseManager = new PersistentExpenseManager(MainActivity.this);
         } catch (ExpenseManagerException e) {

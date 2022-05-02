@@ -9,6 +9,7 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountExcep
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
+// Persistent DAO class for Account class
 public class PersistentAccountDAO implements AccountDAO {
     private DataBaseHelper dbh;
 

@@ -7,6 +7,7 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
+// Persistent DAO for Transaction Class
 public class PersistentTransactionDAO implements TransactionDAO {
     private DataBaseHelper dbh;
 
