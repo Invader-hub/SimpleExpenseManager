@@ -170,8 +170,51 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }else {
             // Do nothing;
         }
-
         return returnList;
+    }
+
+    public Account getAccountFromNo(String accountNoIn){
+        Account curAccount = null;
+
+        String sql_query = "SELECT * FROM "+ ACCOUNT+" WHERE "+ACCOUNT_NO+" = '"+accountNoIn+"';";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql_query, null);
+
+        cursor.moveToFirst();
+        String accountNo = cursor.getString(0);
+        String bankName = cursor.getString(1);
+        String accountHolder = cursor.getString(2);
+        float initialBalance = cursor.getFloat(3);
+
+        curAccount = new Account(accountNo, bankName, accountHolder, initialBalance);
+
+
+        return curAccount;
+    }
+
+    public boolean deleteOneAccount(String accountNo){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqlDeleteQuery = "DELETE FROM "+ ACCOUNT+" WHERE "+ ACCOUNT_NO + " = '"+accountNo+ "';";
+        Cursor cursor = db.rawQuery(sqlDeleteQuery, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean updateAccountBalance(String accountNo, double amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqlUpdateBalanceQuery = "UPDATE "+ACCOUNT+" SET "+INITIAL_BALANCE+" =(SELECT "+INITIAL_BALANCE+" FROM "+ACCOUNT+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"') + "+amount+" WHERE "+ACCOUNT_NO+" = '"+accountNo+"';";
+        Cursor cursor = db.rawQuery(sqlUpdateBalanceQuery, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

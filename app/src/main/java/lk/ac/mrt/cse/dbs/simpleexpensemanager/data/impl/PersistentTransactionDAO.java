@@ -8,18 +8,31 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
 public class PersistentTransactionDAO implements TransactionDAO {
+    private DataBaseHelper dbh;
+
+    public PersistentTransactionDAO(DataBaseHelper dbh) {
+        this.dbh = dbh;
+    }
+
     @Override
     public void logTransaction(Date date, String accountNo, ExpenseType expenseType, double amount) {
-
+        Transaction curTransaction = new Transaction(date, accountNo, expenseType, amount);
+        boolean b = dbh.addOneTransactionLog(curTransaction);
     }
 
     @Override
     public List<Transaction> getAllTransactionLogs() {
-        return null;
+        return dbh.getAllLog();
     }
 
     @Override
     public List<Transaction> getPaginatedTransactionLogs(int limit) {
-        return null;
+        List<Transaction> transactions = this.getAllTransactionLogs();
+        int size = transactions.size();
+        if (size <= limit) {
+            return transactions;
+        }
+        // return the last <code>limit</code> number of transaction logs
+        return transactions.subList(size - limit, size);
     }
 }
