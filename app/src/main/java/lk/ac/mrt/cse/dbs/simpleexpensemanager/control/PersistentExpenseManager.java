@@ -10,9 +10,12 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.PersistentAccountDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.PersistentTransactionDAO;
 
 public class PersistentExpenseManager extends ExpenseManager{
-    private DataBaseHelper dbh;
+    private transient DataBaseHelper dbh;
+    private transient Context context;
     public  PersistentExpenseManager(Context context) throws ExpenseManagerException {
+
         this.dbh =  new DataBaseHelper(context);
+        this.context = context;
         setup();
     }
 
