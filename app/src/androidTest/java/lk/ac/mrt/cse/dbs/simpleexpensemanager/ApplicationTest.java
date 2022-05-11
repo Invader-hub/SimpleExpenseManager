@@ -44,6 +44,6 @@ public class ApplicationTest {
     public void testAddAccount() {
         expenseManager.addAccount("1234", "AAA", "BBB", 200.0);
         List<String> accountNumbers = expenseManager.getAccountNumbersList();
-        assertTrue(accountNumbers.contains("1234"));
+        assertTrue(accountNumbers.contains("134"));
     }
 }
