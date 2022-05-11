@@ -62,7 +62,7 @@ public class ApplicationTest {
         List<Transaction> transactions = expenseManager.getTransactionLogs();
         for (Transaction t : transactions) {
 
-            assertTrue(t.getAccountNo().equals("1234"));
+            assertTrue(t.getAccountNo().equals("134"));
             assertTrue(t.getAmount() == 500.0);
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
