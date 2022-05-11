@@ -19,6 +19,8 @@ package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 
 import androidx.test.core.app.ApplicationProvider;
 
@@ -30,6 +32,9 @@ import java.util.List;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
 public class ApplicationTest {
     private ExpenseManager expenseManager;
@@ -44,6 +49,27 @@ public class ApplicationTest {
     public void testAddAccount() {
         expenseManager.addAccount("1234", "AAA", "BBB", 200.0);
         List<String> accountNumbers = expenseManager.getAccountNumbersList();
-        assertTrue(accountNumbers.contains("134"));
+        assertTrue(accountNumbers.contains("1234"));
+    }
+
+    @Test
+    public void testAddTransaction() {
+        try {
+            expenseManager.updateAccountBalance("1234", 11, 04, 2022, ExpenseType.EXPENSE, "500.0");
+        } catch (InvalidAccountException e) {
+            assertTrue(false);
+        }
+        List<Transaction> transactions = expenseManager.getTransactionLogs();
+        for (Transaction t : transactions) {
+
+            assertTrue(t.getAccountNo().equals("1234"));
+            assertTrue(t.getAmount() == 500.0);
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String strDate = dateFormat.format(t.getDate());
+            assertTrue(strDate.equals("2022-05-11"));
+            assertTrue(t.getExpenseType() == ExpenseType.EXPENSE);
+
+        }
     }
 }
